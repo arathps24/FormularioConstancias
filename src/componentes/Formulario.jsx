@@ -17,6 +17,7 @@ export default function Formulario() {
   const NombreEscribir = (event) => {
     setNombre(event.target.value);
   };
+
   const ApellidoPescribir = (event) => {
     SetApellidoP(event.target.value);
   };
@@ -24,31 +25,49 @@ export default function Formulario() {
   const ApellidoMescribir = (event) => {
     SetApellidoM(event.target.value);
   };
+
   const CorreoEscribir = (event) => {
     SetCorreo(event.target.value);
   };
+
   const DiaEscribir = (event) => {
-    let value = event.target.value;
-    if (value.length === 1) {
-      value = `0${value}`;
+    const value = event.target.value;
+    if (value <= 31) {
+      // Validar que el día no exceda el máximo de 31
+      setDia(value);
     }
-    setDia(value);
   };
+
   const MesEscribir = (event) => {
-    let value = event.target.value;
-    if (value.length === 1) {
-      value = `0${value}`;
+    const value = event.target.value;
+    if (value <= 12) {
+      // Validar que el mes no exceda el máximo de 12
+      setMes(value);
     }
-    setMes(value);
   };
+
   const AñoEscribir = (event) => {
     setAño(event.target.value);
+  };
+
+  const handleBlurDia = () => {
+    // Añadir cero al día si es menor a 10 y no está vacío
+    if (Dia !== "" && Dia < 10 && Dia.length === 1) {
+      setDia(`0${Dia}`);
+    }
+  };
+
+  const handleBlurMes = () => {
+    // Añadir cero al mes si es menor a 10 y no está vacío
+    if (Mes !== "" && Mes < 10 && Mes.length === 1) {
+      setMes(`0${Mes}`);
+    }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const FechaN = `${Año}/${Mes}/${Dia}`;
+    const FechaN = `${Dia}/${Mes}/${Año}`;
 
     const formData = {
       Correo,
@@ -68,7 +87,7 @@ export default function Formulario() {
       setMes("");
       setAño("");
       setAlertaActivar(true);
-      setAlertaMensaje("¡Datos enviado exitosamente!");
+      setAlertaMensaje("¡Datos enviados exitosamente!");
     } catch (error) {
       setError("Los datos son incorrectos. Por favor, inténtalo de nuevo.");
     }
@@ -124,6 +143,7 @@ export default function Formulario() {
                 placeholder="Día"
                 value={Dia}
                 onChange={DiaEscribir}
+                onBlur={handleBlurDia}
               />
               <input
                 className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 w-1/3 focus:bg-gray-800 focus:outline-none"
@@ -131,6 +151,7 @@ export default function Formulario() {
                 placeholder="Mes"
                 value={Mes}
                 onChange={MesEscribir}
+                onBlur={handleBlurMes}
               />
               <input
                 className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 w-1/3 focus:bg-gray-800 focus:outline-none"
