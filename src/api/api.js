@@ -1,6 +1,6 @@
 //------------------------ api.js ----------------------------------
 
-const API1 = "http://localhost:3001/api/usuario";
+const API1 = "http://74.208.70.216:3001/api/usuario";
 
 export const guardarUsuario = async (formData) => {
   try {
